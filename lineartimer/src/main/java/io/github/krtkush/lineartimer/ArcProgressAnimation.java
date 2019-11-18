@@ -1,6 +1,7 @@
 package io.github.krtkush.lineartimer;
 
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
 /**
@@ -28,6 +29,8 @@ public class ArcProgressAnimation extends Animation {
         this.endingAngle = endingAngle;
         this.linearTimerView = linearTimerView;
         this.timerListener = timerListener;
+
+        this.setInterpolator(new LinearInterpolator());
     }
 
     @Override
