@@ -1,6 +1,8 @@
 package io.github.krtkush.lineartimer;
 
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
@@ -30,12 +32,19 @@ public class ArcProgressAnimation extends Animation {
         this.linearTimerView = linearTimerView;
         this.timerListener = timerListener;
 
-        this.setInterpolator(new LinearInterpolator());
+        this.setInterpolator(new AccelerateDecelerateInterpolator());
+    }
+
+    @Override
+    public void setDuration(long durationMillis) {
+        super.setDuration(durationMillis);
+        if(durationMillis <= 5000L) this.setInterpolator(new AccelerateDecelerateInterpolator());
+        else this.setInterpolator(new LinearInterpolator());
     }
 
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation transformation) {
-        float finalAngle = startingAngle + ((endingAngle - startingAngle) * interpolatedTime);
+        float finalAngle = startingAngle + ((endingAngle - startingAngle) * (interpolatedTime*1.001f));
         linearTimerView.setPreFillAngle(finalAngle);
         linearTimerView.requestLayout();
 
